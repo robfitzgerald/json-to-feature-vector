@@ -46,6 +46,29 @@
           done()
         })
     })
+    it('if provided file config, results should be in a file', (done) => {
+        let source = {sparkifyTest: {foo: 'bar', baz: 'bees'}}
+          , one = 1, pi = 3.14159, abcd = 1234
+          , mapping = [
+            'sparkifyTest.foo',
+            'sparkifyTest.baz',
+            function always1(src, cb) {cb(one)},
+            function alwaysPi(src, cb) {cb(pi)},
+            function findBar(src, cb) {if (src.sparkifyTest.foo === 'bar') {cb(abcd)}}
+          ]
+          , expectedResult = '[1,1,1,3.14159,1234]'
+          , config = {
+            directory: '/tmp/sparkifyTest',
+            fileName: 'test1.txt'
+          }
+        sparkify(source, mapping, config, (result) => {
+          expect(result).to.not.exist;
+          fs.readFile('/tmp/sparkifyTest/test1.txt', (err, data) => {
+            console.log(data)
+            done(err)          
+          })
+        })
+    })
     it.skip('functions that do not successfully call back should produce zero-valued results', (done) => {
         let source = {sparkifyTest: {foo: 'bar', baz: 'bees'}}
           , mapping = [
