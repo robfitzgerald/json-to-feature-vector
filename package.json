@@ -1,8 +1,8 @@
 {
-  "name": "json-to-scala-tuple",
-  "version": "1.0.0",
-  "description": "converts arrays of JSON objects into a string of scala tuples",
-  "main": "index.js",
+  "name": "json-sparkify",
+  "version": "0.1.0",
+  "description": "converts JSON objects into simple string feature vectors",
+  "main": "lib/sparkify.js",
   "directories": {
     "test": "test"
   },
