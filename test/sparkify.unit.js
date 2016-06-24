@@ -4,18 +4,21 @@
     , fs = require("fs-extra")
     , sparkify = require('../lib/sparkify')
   describe('sparkify', () => {
-    // before((done) => {
-    //   fs.remove('mappings/sparkifyTest', (e) => {
-    //     if (e) throw e
-    //     done()
-    //   })
-    // })
-    // after((done) => {
-    //   fs.remove('mappings/sparkifyTest', (e) => {
-    //     if (e) throw e
-    //     done()
-    //   })
-    // })
+    before((done) => {
+      fs.remove('mappings/sparkifyTest', (e) => {
+        if (e) throw e
+        done()
+      })
+    })
+    after((done) => {
+      fs.remove('mappings/sparkifyTest', (e) => {
+        if (e) throw e
+        fs.remove('/tmp/sparkifyTest', (e2) => {
+                if (e2) throw e2
+                done()
+              })
+      })
+    })
     it('should convert a json file to a feature vector and return it when not provided a file location', (done) => {
         let source = {sparkifyTest: {foo: 'bar', baz: 'bees'}}
           , one = 1, pi = 3.14159, abcd = 1234
@@ -63,10 +66,32 @@
           }
         sparkify(source, mapping, config, (result) => {
           expect(result).to.not.exist;
-          fs.readFile('/tmp/sparkifyTest/test1.txt', (err, data) => {
-            console.log(data)
+          fs.readFile('/tmp/sparkifyTest/test1.txt', 'utf8', (err, data) => {
+            expect(data).to.equal(expectedResult)
             done(err)          
           })
+        })
+    })
+    it('if provided string formatting options, should output with provided formatting', (done) => {
+        let source = {sparkifyTest: {foo: 'bar', baz: 'bees'}}
+          , one = 1, pi = 3.14159, abcd = 1234
+          , mapping = [
+            'sparkifyTest.foo',
+            'sparkifyTest.baz',
+            function always1(src, cb) {cb(one)},
+            function alwaysPi(src, cb) {cb(pi)},
+            function findBar(src, cb) {if (src.sparkifyTest.foo === 'bar') {cb(abcd)}}
+          ]
+          , config = {
+            start: ':-)',
+            end: '(-:',
+            delimiter: '~~~'
+          }
+          , expectedResult = ':-)1~~~1~~~1~~~3.14159~~~1234(-:'
+        sparkify(source, mapping, config, (result) => {
+          let resultNoSpaces = result.replace(' ', '')
+          expect(resultNoSpaces).to.equal(expectedResult)
+          done()
         })
     })
     it.skip('functions that do not successfully call back should produce zero-valued results', (done) => {
