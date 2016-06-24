@@ -10,6 +10,10 @@
     "test": "mocha test/*.unit.js"
   },
   "author": "Rob Fitzgerald",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/robfitzgerald/json-sparkify.git"
+  },
   "license": "ISC",
   "devDependencies": {
     "chai": "^3.5.0",
