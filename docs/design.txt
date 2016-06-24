@@ -1,0 +1,50 @@
+1) the goal here is a tool that is able to convert JSON objects to a scala tuple of the form [x1,x2,..,xn], by way of an object-to-tuple mapping.
+
+	it should accept a JSON object and a function
+	it should return a string of the form [x1,x2,..,xn]
+	it should be able to recognize when the function (a n-dimensional schema converter)'s dimension does not match the JSON's set of properties found
+	it should apply the function to the incoming JSON to produce the correct values for the output vector
+	it should be able to run an identity schema conversion which copies all values from the JSON.
+
+2) then, the next goal is to convert any values into real numbers in a way that creates unique values.  research first.
+
+	it should have a base class which has a default mapping when run without a declared mapping object
+	it should have a way of converting all JSON value types into unique real numbers
+	mapping types
+		transaction-base
+			it should map values common to all transaction bodies on baas
+		transaction-litle
+			it should map values from within a litle request body
+		transaction-element
+			it should map values from within an element request body
+		transaction-pws
+			it should map values from within a pws request body
+
+
+transaction-base mapping detail:
+	created: integer
+	valid json request? JSON.parse(transaction.rawRequestJson)
+	json request # of properties
+	payment system used
+		3 different dimensions w/ bool value, based on path to response ||
+		keys of modifiedResponseJSON
+			use Object.keys(transaction.modifiedResponseJSON) and then convert to integer value
+		perhaps this gets absorbed into "response message"
+	response message:
+		find response messages on transaction.modifiedResponseJSON objects:
+			dipjar - pws
+			plated (sample app #2) - litle
+			run  element tests to get element response
+
+transaction-litle mapping detail:
+	request.* properties for things we can learn from
+		common required fields - see boilerplate
+		 
+
+sparkify
+
+propertyPath.json: [
+	"possibleValue0",
+	"possibleValue1",
+	..
+]

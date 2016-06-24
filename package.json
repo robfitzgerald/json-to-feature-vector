@@ -1,0 +1,23 @@
+{
+  "name": "json-to-scala-tuple",
+  "version": "1.0.0",
+  "description": "converts arrays of JSON objects into a string of scala tuples",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test/*.unit.js"
+  },
+  "author": "Rob Fitzgerald",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
+  },
+  "dependencies": {
+    "async": "^2.0.0-rc.6",
+    "fs-extra": "^0.30.0",
+    "lodash": "^4.13.1"
+  }
+}
