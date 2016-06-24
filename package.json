@@ -1,8 +1,8 @@
 {
-  "name": "json-sparkify",
+  "name": "json-to-feature-vector",
   "version": "0.1.0",
   "description": "converts JSON objects into simple string feature vectors",
-  "main": "lib/sparkify.js",
+  "main": "lib/json-to-feature-vector.js",
   "directories": {
     "test": "test"
   },
@@ -12,7 +12,7 @@
   "author": "Rob Fitzgerald",
   "repository": {
     "type": "git",
-    "url": "https://github.com/robfitzgerald/json-sparkify.git"
+    "url": "https://github.com/robfitzgerald/json-to-feature-vector.git"
   },
   "license": "ISC",
   "devDependencies": {
