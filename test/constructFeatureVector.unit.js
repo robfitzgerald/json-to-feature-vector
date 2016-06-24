@@ -94,7 +94,7 @@
 						done()
 					})				
 			})
-			it('enumerations should exist between calls to constructFeatureVector', (done) => {
+			it('enumerations should be stateful between calls to constructFeatureVector', (done) => {
 				let gunslinger = 'daaaaaamn daniel, back at it again with the white vans.'
 					, source = {propertyToVectorTesting:{gunslinger:gunslinger}}
 					, mapping = ['propertyToVectorTesting.gunslinger']
@@ -105,8 +105,7 @@
 						done()
 					})
 				})
-			})
-			it('')			
+			})		
 		})
 	})
 }
