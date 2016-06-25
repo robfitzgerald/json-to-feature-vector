@@ -46,10 +46,30 @@
 				, property = 'fury'
 				, propertyPath = 'propertyToVectorTesting.zappa'
 				, filePath = prop.constructMappingFilePath(propertyPath)
+				, dirPath = prop.constructMappingDirPath(propertyPath)
 			fs.writeJson(filePath, data, () => {
 				prop.toVector(property, propertyPath, null, (result) => {
 					expect(result).to.equal(furyIndex)
 					done()
+				})
+			})
+		})
+		it('when property is string and it exists in a feature mapping file, we can append to it', (done) => {
+			let data = [null, 'bongo', 'fury']
+				, furyIndex = data.indexOf('fury')
+				, property = 'fury'
+				, property2 = 'slurry'
+				, propertyPath = 'propertyToVectorTesting.zippy'
+				, filePath = prop.constructMappingFilePath(propertyPath)
+				, dirPath = prop.constructMappingDirPath(propertyPath)
+			fs.writeJson(filePath, data, () => {
+				prop.toVector(property, propertyPath, null, (result) => {
+					prop.toVector(property2, propertyPath, null, (result2) => {
+						fs.readJson(filePath, (err, file) => {
+							expect(file[3]).to.equal(property2)
+							done()
+						})
+					})
 				})
 			})
 		})
