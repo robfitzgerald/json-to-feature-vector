@@ -30,7 +30,7 @@
             function findBar(src, cb) {if (src.toVectorTest.foo === 'bar') {cb(abcd)}}
           ]
           , expectedResult = '[1,1,1,3.14159,1234]'
-        sparkify(source, mapping, (result) => {
+        sparkify(source, mapping, null, (result) => {
           let resultNoSpaces = result.replace(' ', '')
           expect(resultNoSpaces).to.equal(expectedResult)
           done()
@@ -43,7 +43,7 @@
             'toVectorTest.bad'
           ]
           , expectedResult = '[0,0]'
-        sparkify(source, mapping, (result) => {
+        sparkify(source, mapping, null, (result) => {
           let resultNoSpaces = result.replace(' ', '')
           expect(resultNoSpaces).to.equal(expectedResult)
           done()
@@ -64,7 +64,7 @@
             directory: '/tmp/toVectorTest',
             fileName: 'test1.txt'
           }
-        sparkify(source, mapping, config, (result) => {
+        sparkify(source, mapping, null, config, (result) => {
           expect(result).to.not.exist;
           fs.readFile('/tmp/toVectorTest/test1.txt', 'utf8', (err, data) => {
             expect(data).to.equal(expectedResult)
@@ -88,7 +88,20 @@
             delimiter: '~~~'
           }
           , expectedResult = ':-)1~~~1~~~1~~~3.14159~~~1234(-:'
-        sparkify(source, mapping, config, (result) => {
+        sparkify(source, mapping, null, config, (result) => {
+          let resultNoSpaces = result.replace(' ', '')
+          expect(resultNoSpaces).to.equal(expectedResult)
+          done()
+        })
+    })
+    it('if provided a label, should output with provided label', (done) => {
+        let source = {toVectorTest: {foo: 'bar', baz: 'bees'}}
+          , one = 1, pi = 3.14159, abcd = 1234
+          , mapping = [
+            'toVectorTest.foo'
+         ]
+          , expectedResult = '(myLabel [1])'
+        sparkify(source, mapping, 'myLabel', (result) => {
           let resultNoSpaces = result.replace(' ', '')
           expect(resultNoSpaces).to.equal(expectedResult)
           done()
@@ -100,7 +113,7 @@
             function badFn (src, cb) {return "doesn't call the callback"}
           ]
           , expectedResult = '[0]'
-        sparkify(source, mapping, (result) => {
+        sparkify(source, mapping, null, (result) => {
           let resultNoSpaces = result.replace(' ', '')
           expect(resultNoSpaces).to.equal(expectedResult)
           done()
