@@ -32,10 +32,10 @@ let toVector = require('json-to-feature-vector')
     'bar.baz',
     function gt3 (src, cb) {cb(src.num > 3 ? 1 : 0)}
   ]
-toVector(source, mappings, (res1) => {
+toVector(source, mappings, null, (res1) => {
   expect(res1).to.equal('[1,1,1')
 })
-toVector(source, mappings, (res2) => {
+toVector(source, mappings, null, (res2) => {
   expect(res2).to.equal('[2,0,0]')
 })
 ```
